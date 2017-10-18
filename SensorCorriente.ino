@@ -31,7 +31,7 @@ y otros elementos que se haya decidido usar en el circuito.
 #include <Wire.h>
 
 
-#define ratioTraf (220/8.15)          //18.3
+#define ratioTraf (220/7.5)          //18.3
 
 void setup(){
 
@@ -143,38 +143,26 @@ If COUNTER = 10.000, the frecuency is 50[Hz]
     */
   //  PF = getFPOWER();
     PF = calcFPOWER(e2,e3,ae2,ae3,ke);
-
-    Serial.println("\n------------------------------------------");
-    Serial.print(reloj.Date());//fecha
-    Serial.print(" - ");
-    Serial.print(reloj.Time());//hora
-    Serial.print("\nVoltaje RMS [V]: ");
-    Serial.print(kv*v1,2);
-    Serial.print("\nCorriente RMS [A]: ");
-    Serial.print(ki*i1,3);
-
     energy = ke*(e3-e2)/basetime;
     if(fabs(energy ) > 1e6){energy = 0.0;}
-    Serial.print("\nPotencia Activa [W] (Acumulada en [J] por 0,1 seg :) ");
-    Serial.print(fabs(energy),2);  //Se ve la diferencia entre la energía activa acumulada en 0,3 segundos y la acumulada en 0,2 segundos.
+    if (fabs(energy),2 < 3.66){
+      Serial.print("0,");
+    }
+    else {
+      Serial.print("1,");
+    }
+
+    Serial.print(fabs(energy),2);  //Imprimir Potencia Activa
+
+    Serial.print("\n");
+
     //Se desprecia la energía activa acumulada en 0,1 segundo ya que los valores de mediciones iniciales no siempre son correctas.
 
     aparent = ke*(ae3-ae2)/basetime;
     if(fabs(aparent ) > 1e6){aparent = 0.0;}
-    Serial.print("\nPotencia Aparente [VA] (Acumulada en [J] por 0,1 seg :) ");
-    Serial.print(fabs(aparent),2);  //Se ve la diferencia entre la energía aparente acumulada en 0,3 segundos y la acumulada en 0,2 segundos.
-    //Se desprecia la energía activa acumulada en 0,1 segundo ya que los valores de mediciones iniciales no siempre son correctas.
 
     reactive = ke*(r3-r2)/basetime;
     if(fabs(reactive ) > 1e6){reactive = 0.0;}
-    Serial.print("\nPotencia Reactiva [var] (Acumulada en [J] por 0,1 seg :) ");
-    Serial.print(fabs(reactive),2);  //Se ve la diferencia entre la energía reactiva acumulada en 1 segundos y la acumulada en 2 segundos.
-
-    Serial.print("\nPeriodo de la senal de voltaje [ms]: ");
-    Serial.print(1000*(t1/kt),0);
-
-    Serial.print("\nFrecuencia de la senal de voltaje [Hz]: ");
-    Serial.print(f1);
 
     if(reactive > 0)
       typeLoad = "cap";
@@ -182,12 +170,6 @@ If COUNTER = 10.000, the frecuency is 50[Hz]
       typeLoad = "ind";
     else
       typeLoad = "   ";
-
-    Serial.print("\nTipo de Carga : ");
-    Serial.println(typeLoad);
-
-    Serial.print("\nFactor de Potencia []: ");
-    Serial.println(PF,2);
     /*************************************************************************/
 
   }
