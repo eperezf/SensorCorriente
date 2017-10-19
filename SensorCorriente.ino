@@ -145,17 +145,10 @@ If COUNTER = 10.000, the frecuency is 50[Hz]
     PF = calcFPOWER(e2,e3,ae2,ae3,ke);
     energy = ke*(e3-e2)/basetime;
     if(fabs(energy ) > 1e6){energy = 0.0;}
-    if (fabs(energy),2 < 3.66){
-      Serial.print("0,");
-    }
-    else {
-      Serial.print("1,");
-    }
-
+    Serial.print(kv*v1,2);
+    Serial.print(",");
     Serial.print(fabs(energy),2);  //Imprimir Potencia Activa
-
     Serial.print("\n");
-
     //Se desprecia la energía activa acumulada en 0,1 segundo ya que los valores de mediciones iniciales no siempre son correctas.
 
     aparent = ke*(ae3-ae2)/basetime;
