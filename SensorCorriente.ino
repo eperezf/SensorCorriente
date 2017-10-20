@@ -178,7 +178,6 @@ float calcFPOWER(long e2, long e3, long a2, long a3, float ke){
   else if ( fabs(ke*(a3-a2)) <= 0.0000002)
   {
     PF = 0.0;
-    Serial.println("WARNING - Power Factor");
   }
   else if( (ke*(a3-a2)) >= (ke*(e3-e2)) ) {
     PF = fabs((ke*(e3-e2))/(ke*(a3-a2)));
@@ -192,7 +191,6 @@ float calcFPOWER(long e2, long e3, long a2, long a3, float ke){
 
   if( (PF > 1.0) || (PF < 0.0000002)){
    PF = 1.0;
-    Serial.println("WARNING - Power Factor");
   }
 
   return PF;

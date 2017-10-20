@@ -476,8 +476,8 @@ int ADE7753::resetStatus(void){
 long ADE7753::getIRMS(void){
 	long lastupdate = 0;
   long timing = 0;
+  lastupdate = millis();
 	ADE7753::getresetInterruptStatus(); // Clear all interrupts
-	lastupdate = millis();
 	while(!( ADE7753::getInterruptStatus() & ZX )){
     timing = millis() - lastupdate;
     if (timing >=1000){
@@ -503,8 +503,8 @@ long ADE7753::getIRMS(void){
 long ADE7753::getVRMS(void){
 	long lastupdate = 0;
   long timing = 0;
+  lastupdate = millis();
 	ADE7753::getresetInterruptStatus(); // Clear all interrupts
-	lastupdate = millis();
 	while(!( ADE7753::getInterruptStatus() & ZX )){
     timing = millis() - lastupdate;
     if (timing >=1000){
@@ -636,7 +636,6 @@ a3=ADE7753::getLVAENERGY();
   else if ( fabs(ke*(a3-a2)) <= 0.0000002)
   {
     PF = 0.0;
-    Serial.print("WARNING - Power Factor");
   }
   else if( (ke*(a3-a2)) >= (ke*(e3-e2)) ) {
     PF = fabs((ke*(e3-e2))/(ke*(a3-a2)));
@@ -650,7 +649,6 @@ a3=ADE7753::getLVAENERGY();
 
   if( (PF > 1.0) || (PF < 0.0000002)){
    PF = 1.0;
-    Serial.print("WARNING - Power Factor");
   }
 
   return PF;
@@ -671,6 +669,10 @@ long ADE7753::vrms(){
 	if (getVRMS() != 0){
     for(i=0;i<20;++i){
   		v+=getVRMS();
+      if (getVRMS() == 0){
+        return 0;
+        break;
+      }
   	}
   	return v/20;
   }
@@ -694,6 +696,10 @@ long ADE7753::irms(){
   if (getIRMS() != 0){
     for(n=0;n<20;++n){
   		i+=getIRMS();
+      if (getIRMS() == 0){
+        return 0;
+        break;
+      }
   	}
   	return i/20;
   }
