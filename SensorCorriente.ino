@@ -87,135 +87,145 @@ If COUNTER = 10.000, the frecuency is 50[Hz]
     //--Medición de Voltaje--
     Serial.println("--Obteniendo VRMS--");
     v1=meter.vrms();
-    Serial.println("--OK--");
-    //--Medición de Corriente--
-    Serial.println("--Obteniendo IRMS--");
-    i1=meter.irms();
-    Serial.println("--OK--");
-    //--Medición de Período--
-    Serial.println("--Obteniendo periodo--");
-    t1=meter.getPeriod();
-    Serial.println("--OK--");
-    f1 = kt/t1; //se calcula la frecuencia
+    Serial.println(kv*v1,2);
+    long voltot = kv*v1;
+    if (voltot == 0.0){
+      Serial.println("--VOLTAJE ES 0--");
+      Serial.print("0.0,0.0");
+      Serial.print("\n");
+    }
+    else {
+      Serial.println("--OK--");
+      //--Medición de Corriente--
+      Serial.println("--Obteniendo IRMS--");
+      i1=meter.irms();
+      Serial.println("--OK--");
+      //--Medición de Período--
+      Serial.println("--Obteniendo periodo--");
+      t1=meter.getPeriod();
+      Serial.println("--OK--");
+      f1 = kt/t1; //se calcula la frecuencia
 
-    /*********************************************************/
-    //Medición de Energía Activa Acumulada
-    Serial.println("--Modo 0x0080--");
-    meter.setMode(0x0080); //Se inicia el modo de acumulación de energía.
-    Serial.println("--OK--");
-    Serial.println("--Ciclos--");
-    meter.setLineCyc(1*NUMCYC); //Se fija el número de medios ciclos ocupados en la medición. 10 medio ciclos equivalen a 0,1 segundo trabajando en una red de 50 Hz (Chile).
-    Serial.println("--OK--");
-    Serial.println("--Obteniendo Energía activa Acumulada 1--");
-    e1=meter.getLAENERGY(); //Extrae la energía activa acumulada, sincronizando la medición con los cruces por cero de la señal de voltaje.
-    Serial.println("--OK--");
-    Serial.println("--Modo 0x0080--");
-    meter.setMode(0x0080);
-    Serial.println("--OK--");
-    Serial.println("--Ciclos--");
-    meter.setLineCyc(2*NUMCYC); // 0,2 segundos de medición.
-    Serial.println("--OK--");
-    Serial.println("--Obteniendo Energía activa Acumulada 2--");
-    e2=meter.getLAENERGY();
-    Serial.println("--OK--");
-    Serial.println("--Modo 0x0080--");
-    meter.setMode(0x0080);
-    Serial.println("--OK--");
-    Serial.println("--Obteniendo Energía activa Acumulada 3--");
-    meter.setLineCyc(3*NUMCYC); // 0,3 segundos de medición.
-    e3=meter.getLAENERGY();
-    Serial.println("--OK--");
       /*********************************************************/
-    //Medición de Energía Aparente Acumulada
-    Serial.println("--Modo 0x0080--");
-    meter.setMode(0x0080); //Se inicia el modo de acumulación de energía.
-    Serial.println("--OK--");
-    Serial.println("--Ciclos--");
-    meter.setLineCyc(1*NUMCYC); //Se fija el número de medios ciclos ocupados en la medición. 10 medio ciclos equivalen a 0,1 segundo trabajando en una red de 50 Hz (Chile).
-    Serial.println("--OK--");
-    Serial.println("--Obteniendo Energía aparente Acumulada 1--");
-    ae1=meter.getLVAENERGY(); //Extrae la energía aparente acumulada, sincronizando la medición con los cruces por cero de la señal de voltaje.
-    Serial.println("--OK--");
-    Serial.println("--Modo 0x0080--");
-    meter.setMode(0x0080);
-    Serial.println("--OK--");
-    Serial.println("--Ciclos--");
-    meter.setLineCyc(2*NUMCYC); // 0,2 segundos de medición.
-    Serial.println("--OK--");
-    Serial.println("--Obteniendo Energía aparente Acumulada 2--");
-    ae2=meter.getLVAENERGY();
-    Serial.println("--OK--");
-    Serial.println("--Modo 0x0080--");
-    meter.setMode(0x0080);
-    Serial.println("--OK--");
-    Serial.println("--Ciclos--");
-    meter.setLineCyc(3*NUMCYC); // 0,3 segundos de medición.
-    Serial.println("--OK--");
-    Serial.println("--Obteniendo Energía aparente Acumulada 3--");
-    ae3=meter.getLVAENERGY();
-    Serial.println("--OK--");
+      //Medición de Energía Activa Acumulada
+      Serial.println("--Modo 0x0080--");
+      meter.setMode(0x0080); //Se inicia el modo de acumulación de energía.
+      Serial.println("--OK--");
+      Serial.println("--Ciclos--");
+      meter.setLineCyc(1*NUMCYC); //Se fija el número de medios ciclos ocupados en la medición. 10 medio ciclos equivalen a 0,1 segundo trabajando en una red de 50 Hz (Chile).
+      Serial.println("--OK--");
+      Serial.println("--Obteniendo Energía activa Acumulada 1--");
+      e1=meter.getLAENERGY(); //Extrae la energía activa acumulada, sincronizando la medición con los cruces por cero de la señal de voltaje.
+      Serial.println("--OK--");
+      Serial.println("--Modo 0x0080--");
+      meter.setMode(0x0080);
+      Serial.println("--OK--");
+      Serial.println("--Ciclos--");
+      meter.setLineCyc(2*NUMCYC); // 0,2 segundos de medición.
+      Serial.println("--OK--");
+      Serial.println("--Obteniendo Energía activa Acumulada 2--");
+      e2=meter.getLAENERGY();
+      Serial.println("--OK--");
+      Serial.println("--Modo 0x0080--");
+      meter.setMode(0x0080);
+      Serial.println("--OK--");
+      Serial.println("--Obteniendo Energía activa Acumulada 3--");
+      meter.setLineCyc(3*NUMCYC); // 0,3 segundos de medición.
+      e3=meter.getLAENERGY();
+      Serial.println("--OK--");
+        /*********************************************************/
+      //Medición de Energía Aparente Acumulada
+      Serial.println("--Modo 0x0080--");
+      meter.setMode(0x0080); //Se inicia el modo de acumulación de energía.
+      Serial.println("--OK--");
+      Serial.println("--Ciclos--");
+      meter.setLineCyc(1*NUMCYC); //Se fija el número de medios ciclos ocupados en la medición. 10 medio ciclos equivalen a 0,1 segundo trabajando en una red de 50 Hz (Chile).
+      Serial.println("--OK--");
+      Serial.println("--Obteniendo Energía aparente Acumulada 1--");
+      ae1=meter.getLVAENERGY(); //Extrae la energía aparente acumulada, sincronizando la medición con los cruces por cero de la señal de voltaje.
+      Serial.println("--OK--");
+      Serial.println("--Modo 0x0080--");
+      meter.setMode(0x0080);
+      Serial.println("--OK--");
+      Serial.println("--Ciclos--");
+      meter.setLineCyc(2*NUMCYC); // 0,2 segundos de medición.
+      Serial.println("--OK--");
+      Serial.println("--Obteniendo Energía aparente Acumulada 2--");
+      ae2=meter.getLVAENERGY();
+      Serial.println("--OK--");
+      Serial.println("--Modo 0x0080--");
+      meter.setMode(0x0080);
+      Serial.println("--OK--");
+      Serial.println("--Ciclos--");
+      meter.setLineCyc(3*NUMCYC); // 0,3 segundos de medición.
+      Serial.println("--OK--");
+      Serial.println("--Obteniendo Energía aparente Acumulada 3--");
+      ae3=meter.getLVAENERGY();
+      Serial.println("--OK--");
 
-    /*********************************************************/
-    //Medición de Energía Reactiva Acumulada
-    Serial.println("--Modo 0x0080--");
-    meter.setMode(0x0080); //Se inicia el modo de acumulación de energía.
-    Serial.println("--OK--");
-    Serial.println("--Ciclos--");
-    meter.setLineCyc(10); //Se fija el número de medios ciclos ocupados en la medición. 10 medio ciclos equivalen a 1 segundo trabajando en una red de 50 Hz (Chile).
-    Serial.println("--OK--");
-    Serial.println("--Obteniendo Energía activa Acumulada 1--");
-    r1=meter.getReactiveEnergy(); //Extrae la energía activa acumulada, sincronizando la medición con los cruces por cero de la señal de voltaje.
-    Serial.println("--OK--");
+      /*********************************************************/
+      //Medición de Energía Reactiva Acumulada
+      Serial.println("--Modo 0x0080--");
+      meter.setMode(0x0080); //Se inicia el modo de acumulación de energía.
+      Serial.println("--OK--");
+      Serial.println("--Ciclos--");
+      meter.setLineCyc(10); //Se fija el número de medios ciclos ocupados en la medición. 10 medio ciclos equivalen a 1 segundo trabajando en una red de 50 Hz (Chile).
+      Serial.println("--OK--");
+      Serial.println("--Obteniendo Energía activa Acumulada 1--");
+      r1=meter.getReactiveEnergy(); //Extrae la energía activa acumulada, sincronizando la medición con los cruces por cero de la señal de voltaje.
+      Serial.println("--OK--");
 
-    Serial.println("--Modo 0x0080--");
-    meter.setMode(0x0080);
-    Serial.println("--OK--");
-    Serial.println("--Ciclos--");
-    meter.setLineCyc(20); // 0,2 segundos de medición.
-    Serial.println("--OK--");
-    Serial.println("--Obteniendo Energía activa Acumulada 2--");
-    r2=meter.getReactiveEnergy();
-    Serial.println("--OK--");
+      Serial.println("--Modo 0x0080--");
+      meter.setMode(0x0080);
+      Serial.println("--OK--");
+      Serial.println("--Ciclos--");
+      meter.setLineCyc(20); // 0,2 segundos de medición.
+      Serial.println("--OK--");
+      Serial.println("--Obteniendo Energía activa Acumulada 2--");
+      r2=meter.getReactiveEnergy();
+      Serial.println("--OK--");
 
-    Serial.println("--Modo 0x0080--");
-    meter.setMode(0x0080);
-    Serial.println("--OK--");
-    Serial.println("--Ciclos--");
-    meter.setLineCyc(30); // 0,3 segundos de medición.
-    Serial.println("--OK--");
-    Serial.println("--Obteniendo Energía activa Acumulada 3--");
-    r3=meter.getReactiveEnergy();
-    Serial.println("--OK--");
+      Serial.println("--Modo 0x0080--");
+      meter.setMode(0x0080);
+      Serial.println("--OK--");
+      Serial.println("--Ciclos--");
+      meter.setLineCyc(30); // 0,3 segundos de medición.
+      Serial.println("--OK--");
+      Serial.println("--Obteniendo Energía activa Acumulada 3--");
+      r3=meter.getReactiveEnergy();
+      Serial.println("--OK--");
 
-    /*********************************************************/
+      /*********************************************************/
 
-    /* Si tenemos los valores de energia activa y aparente
-    podemos realizar el calculo, y nos evitamos hacer nuevamente
-    las mediciones ahorrando tiempo.
-    */
-  //  PF = getFPOWER();
-    PF = calcFPOWER(e2,e3,ae2,ae3,ke);
-    energy = ke*(e3-e2)/basetime;
-    if(fabs(energy ) > 1e6){energy = 0.0;}
-    Serial.print(kv*v1,2);
-    Serial.print(",");
-    Serial.print(fabs(energy),2);  //Imprimir Potencia Activa
-    Serial.print("\n");
-    //Se desprecia la energía activa acumulada en 0,1 segundo ya que los valores de mediciones iniciales no siempre son correctas.
+      /* Si tenemos los valores de energia activa y aparente
+      podemos realizar el calculo, y nos evitamos hacer nuevamente
+      las mediciones ahorrando tiempo.
+      */
+    //  PF = getFPOWER();
+      PF = calcFPOWER(e2,e3,ae2,ae3,ke);
+      energy = ke*(e3-e2)/basetime;
+      if(fabs(energy ) > 1e6){energy = 0.0;}
+      Serial.print(kv*v1,2);
+      Serial.print(",");
+      Serial.print(fabs(energy),2);  //Imprimir Potencia Activa
+      Serial.print("\n");
+      //Se desprecia la energía activa acumulada en 0,1 segundo ya que los valores de mediciones iniciales no siempre son correctas.
 
-    aparent = ke*(ae3-ae2)/basetime;
-    if(fabs(aparent ) > 1e6){aparent = 0.0;}
+      aparent = ke*(ae3-ae2)/basetime;
+      if(fabs(aparent ) > 1e6){aparent = 0.0;}
 
-    reactive = ke*(r3-r2)/basetime;
-    if(fabs(reactive ) > 1e6){reactive = 0.0;}
+      reactive = ke*(r3-r2)/basetime;
+      if(fabs(reactive ) > 1e6){reactive = 0.0;}
 
-    if(reactive > 0)
-      typeLoad = "cap";
-    else if (reactive < 0)
-      typeLoad = "ind";
-    else
-      typeLoad = "   ";
-    /*************************************************************************/
+      if(reactive > 0)
+        typeLoad = "cap";
+      else if (reactive < 0)
+        typeLoad = "ind";
+      else
+        typeLoad = "   ";
+      /*************************************************************************/
+    }
+
 
   }
 }
