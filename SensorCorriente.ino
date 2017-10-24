@@ -81,11 +81,10 @@ If COUNTER = 10.000, the frecuency is 50[Hz]
 
   while(1){
     //--Reloj de tiempo real--
-    reloj.GetDate()
+    reloj.GetDate();
     //--Medición de Voltaje--
 
     v1=meter.vrms();
-    Serial.println(kv*v1,2);
     long voltot = kv*v1;
     if (voltot == 0.0){
 
@@ -108,7 +107,7 @@ If COUNTER = 10.000, the frecuency is 50[Hz]
       //Medición de Energía Activa Acumulada
 
       meter.setMode(0x0080); //Se inicia el modo de acumulación de energía.
-      S
+
       meter.setLineCyc(1*NUMCYC); //Se fija el número de medios ciclos ocupados en la medición. 10 medio ciclos equivalen a 0,1 segundo trabajando en una red de 50 Hz (Chile).
 
       e1=meter.getLAENERGY(); //Extrae la energía activa acumulada, sincronizando la medición con los cruces por cero de la señal de voltaje.
